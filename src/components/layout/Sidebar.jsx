@@ -1,6 +1,7 @@
 
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -13,7 +14,6 @@ import {
   Headset,
   LogOut,
   Leaf,
-  Bike,
 } from "lucide-react";
 
 const menuItems = [
@@ -25,7 +25,7 @@ const menuItems = [
   { label: "My Profile", href: "/dashboard/profile", icon: UserRound },
 ];
 
-export default function Sidebar() {
+function SidebarContent() {
   const pathname = usePathname();
 
   return (
@@ -34,6 +34,7 @@ export default function Sidebar() {
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#16833b] text-white">
           <Leaf size={25} />
         </div>
+
         <div>
           <h2 className="text-xl font-extrabold tracking-tight text-[#16833b]">
             BhajiWala
@@ -52,6 +53,7 @@ export default function Sidebar() {
         <nav className="space-y-1">
           {menuItems.map((item) => {
             const Icon = item.icon;
+
             const active =
               pathname === item.href ||
               (item.href !== "/dashboard" &&
@@ -69,6 +71,7 @@ export default function Sidebar() {
               >
                 <Icon size={19} />
                 {item.label}
+
                 {item.label === "Notifications" && (
                   <span className="ml-auto h-2 w-2 rounded-full bg-orange-500" />
                 )}
@@ -84,9 +87,11 @@ export default function Sidebar() {
             <Headset size={18} />
             <span className="text-sm font-bold">Need Help?</span>
           </div>
+
           <p className="text-xs leading-5 text-gray-500">
             Our support team is here to help you.
           </p>
+
           <button className="mt-3 text-xs font-bold text-[#16833b]">
             Contact Support →
           </button>
@@ -102,5 +107,13 @@ export default function Sidebar() {
         </p>
       </div>
     </aside>
+  );
+}
+
+export default function Sidebar() {
+  return (
+    <Suspense fallback={null}>
+      <SidebarContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,13 +18,14 @@ const items = [
   { label: "Profile", href: "/dashboard/profile", icon: UserRound },
 ];
 
-export default function BottomNavigation() {
+function BottomNavigationContent() {
   const pathname = usePathname();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-gray-100 bg-white px-2 pb-[max(env(safe-area-inset-bottom),8px)] pt-2 shadow-[0_-5px_20px_rgba(0,0,0,0.04)] lg:hidden">
       {items.map((item) => {
         const Icon = item.icon;
+
         const active =
           pathname === item.href ||
           (item.href !== "/dashboard" &&
@@ -44,10 +46,19 @@ export default function BottomNavigation() {
             >
               <Icon size={20} strokeWidth={active ? 2.5 : 1.8} />
             </div>
+
             {item.label}
           </Link>
         );
       })}
     </nav>
+  );
+}
+
+export default function BottomNavigation() {
+  return (
+    <Suspense fallback={null}>
+      <BottomNavigationContent />
+    </Suspense>
   );
 }
