@@ -3,7 +3,13 @@
 
 import { Upload } from "lucide-react";
 
-function DocumentUpload({ label, name, files, updateFile }) {
+function DocumentUpload({
+  label,
+  name,
+  files,
+  updateFile,
+  accept = "image/jpeg,image/png,application/pdf",
+}) {
   return (
     <div>
       <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -19,13 +25,15 @@ function DocumentUpload({ label, name, files, updateFile }) {
           <p className="truncate text-sm font-semibold text-gray-700">
             {files[name]?.name || "Upload document"}
           </p>
-          <p className="mt-1 text-xs text-gray-400">JPG, PNG or PDF</p>
+          <p className="mt-1 text-xs text-gray-400">
+            {name === "profilePhoto" ? "JPG or PNG" : "JPG, PNG or PDF"}
+          </p>
         </div>
 
         <input
           type="file"
           name={name}
-          accept="image/*,.pdf"
+          accept={accept}
           onChange={updateFile}
           className="hidden"
         />
@@ -34,7 +42,12 @@ function DocumentUpload({ label, name, files, updateFile }) {
   );
 }
 
-export default function IdentityDocuments({ form, updateField, files, updateFile }) {
+export default function IdentityDocuments({
+  form,
+  updateField,
+  files,
+  updateFile,
+}) {
   const inputClass =
     "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 uppercase outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100";
 
@@ -45,6 +58,7 @@ export default function IdentityDocuments({ form, updateField, files, updateFile
       <h2 className="mb-2 text-lg font-bold text-gray-900">
         Identity Verification
       </h2>
+
       <p className="mb-5 text-sm text-gray-500">
         Provide your document details for verification.
       </p>
@@ -86,10 +100,34 @@ export default function IdentityDocuments({ form, updateField, files, updateFile
           />
         </div>
 
-        <DocumentUpload label="Aadhaar Card" name="aadhaarFile" files={files} updateFile={updateFile} />
-        <DocumentUpload label="PAN Card" name="panFile" files={files} updateFile={updateFile} />
-        <DocumentUpload label="Driving Licence" name="licenceFile" files={files} updateFile={updateFile} />
-        <DocumentUpload label="Profile Photo" name="profilePhoto" files={files} updateFile={updateFile} />
+        <DocumentUpload
+          label="Aadhaar Card"
+          name="aadhaarFile"
+          files={files}
+          updateFile={updateFile}
+        />
+
+        <DocumentUpload
+          label="PAN Card"
+          name="panFile"
+          files={files}
+          updateFile={updateFile}
+        />
+
+        <DocumentUpload
+          label="Driving Licence"
+          name="licenceFile"
+          files={files}
+          updateFile={updateFile}
+        />
+
+        <DocumentUpload
+          label="Profile Photo"
+          name="profilePhoto"
+          files={files}
+          updateFile={updateFile}
+          accept="image/jpeg,image/png"
+        />
       </div>
     </div>
   );

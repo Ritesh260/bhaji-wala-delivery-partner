@@ -3,7 +3,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Package,
@@ -16,6 +16,8 @@ import {
   Leaf,
 } from "lucide-react";
 
+import { logoutDeliveryPartner } from "@/api/auth_apis";
+
 const menuItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "My Orders", href: "/dashboard/orders", icon: Package },
@@ -27,6 +29,12 @@ const menuItems = [
 
 function SidebarContent() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logoutDeliveryPartner();
+    router.replace("/login");
+  };
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] flex-col border-r border-gray-100 bg-white lg:flex">
@@ -97,7 +105,12 @@ function SidebarContent() {
           </button>
         </div>
 
-        <button className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-red-500 transition hover:bg-red-50">
+        {/* LOGOUT */}
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-red-500 transition hover:bg-red-50"
+        >
           <LogOut size={19} />
           Logout
         </button>
