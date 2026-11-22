@@ -14,29 +14,8 @@ export default function BankDetails({
   const inputClass =
     "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100";
 
-  const labelClass = "mb-2 block text-sm font-semibold text-gray-700";
-
-  // Reusable input field
-  function Field({ label, name, placeholder, type = "text" }) {
-    return (
-      <div>
-        <label htmlFor={name} className={labelClass}>
-          {label} <span className="text-red-500">*</span>
-        </label>
-
-        <input
-          id={name}
-          type={type}
-          name={name}
-          value={form?.[name] ?? ""}
-          onChange={(e) => updateField(e)}
-          placeholder={placeholder}
-          className={inputClass}
-          autoComplete="off"
-        />
-      </div>
-    );
-  }
+  const labelClass =
+    "mb-2 block text-sm font-semibold text-gray-700";
 
   return (
     <div>
@@ -50,35 +29,81 @@ export default function BankDetails({
 
       <div className="grid gap-5 sm:grid-cols-2">
 
+        {/* Account Holder */}
         <div className="sm:col-span-2">
-          <Field
-            label="Account Holder Name"
+          <label htmlFor="accountHolder" className={labelClass}>
+            Account Holder Name <span className="text-red-500">*</span>
+          </label>
+
+          <input
+            id="accountHolder"
             name="accountHolder"
+            type="text"
+            value={form.accountHolder || ""}
+            onChange={updateField}
             placeholder="Name as per bank account"
+            className={inputClass}
+            autoComplete="off"
           />
         </div>
 
-        <Field
-          label="Bank Name"
-          name="bankName"
-          placeholder="Enter bank name"
-        />
+        {/* Bank Name */}
+        <div>
+          <label htmlFor="bankName" className={labelClass}>
+            Bank Name <span className="text-red-500">*</span>
+          </label>
 
-        <Field
-          label="Account Number"
-          name="accountNumber"
-          placeholder="Enter account number"
-        />
+          <input
+            id="bankName"
+            name="bankName"
+            type="text"
+            value={form.bankName || ""}
+            onChange={updateField}
+            placeholder="Enter bank name"
+            className={inputClass}
+            autoComplete="off"
+          />
+        </div>
 
+        {/* Account Number */}
+        <div>
+          <label htmlFor="accountNumber" className={labelClass}>
+            Account Number <span className="text-red-500">*</span>
+          </label>
+
+          <input
+            id="accountNumber"
+            name="accountNumber"
+            type="text"
+            inputMode="numeric"
+            value={form.accountNumber || ""}
+            onChange={updateField}
+            placeholder="Enter account number"
+            className={inputClass}
+            autoComplete="off"
+          />
+        </div>
+
+        {/* IFSC */}
         <div className="sm:col-span-2">
-          <Field
-            label="IFSC Code"
+          <label htmlFor="ifscCode" className={labelClass}>
+            IFSC Code <span className="text-red-500">*</span>
+          </label>
+
+          <input
+            id="ifscCode"
             name="ifscCode"
+            type="text"
+            value={form.ifscCode || ""}
+            onChange={updateField}
             placeholder="e.g. SBIN0001234"
+            className={inputClass}
+            autoComplete="off"
+            maxLength={11}
           />
         </div>
 
-        {/* Bank Document Upload */}
+        {/* Bank Document */}
         <div className="sm:col-span-2">
           <label className={labelClass}>
             Bank Passbook / Cancelled Cheque
@@ -86,7 +111,6 @@ export default function BankDetails({
           </label>
 
           <label className="flex cursor-pointer items-center gap-3 rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-4 transition hover:border-green-500 hover:bg-green-50">
-
             <div className="rounded-lg bg-green-100 p-3 text-green-700">
               <Upload size={20} />
             </div>
@@ -112,7 +136,7 @@ export default function BankDetails({
         </div>
       </div>
 
-      {/* Security Information */}
+      {/* Security */}
       <div className="mt-6 flex gap-3 rounded-xl bg-amber-50 p-4">
         <ShieldCheck
           className="shrink-0 text-amber-700"
